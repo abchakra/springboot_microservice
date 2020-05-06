@@ -2,6 +2,8 @@ package com.example.gallery.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,9 @@ import com.example.gallery.entities.Gallery;
 @RestController
 @RequestMapping("/")
 public class HomeController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+	
+	
 	@Autowired
 	private RestTemplate restTemplate;
 	
@@ -31,13 +36,15 @@ public class HomeController {
 	@RequestMapping("/{id}")
 	public Gallery getGallery(@PathVariable final int id) {
 		// create gallery object
+		LOGGER.info("Creating gallery object ... ");
 		Gallery gallery = new Gallery();
 		gallery.setId(id);
 		
 		// get list of available images 
 		List<Object> images = restTemplate.getForObject("http://image-service/images/", List.class);
 		gallery.setImages(images);
-	
+		
+		LOGGER.info("Returning images ... ");
 		return gallery;
 	}
 	
