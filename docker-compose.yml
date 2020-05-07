@@ -1,0 +1,39 @@
+version: "2.1"
+
+services:
+  image:
+    build: app-image-service
+    mem_limit: 350m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  gallery:
+    build: app-gallery-service
+    mem_limit: 350m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  eureka:
+    build: app-eureka-server
+    mem_limit: 350m
+    ports:
+      - "8761:8761"
+
+  auth-server:
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    build: app-eureka-auth
+    mem_limit: 350m
+
+  gateway:
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    build: app-eureka-zuul
+    mem_limit: 350m
+    ports:
+      - "8080:8080"
+#    networks:
+#      - network-eureka
+
+#networks:
+#  network-eureka:
