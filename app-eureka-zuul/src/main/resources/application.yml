@@ -1,0 +1,49 @@
+server.port: 8080
+
+spring.application.name: api-gateway
+
+app.eureka-server: localhost
+
+logging:
+  level:
+    root: INFO
+    com.example: DEBUG
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${app.eureka-server}:8761/eureka/
+    initialInstanceInfoReplicationIntervalSeconds: 5
+    registryFetchIntervalSeconds: 5
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 5
+
+# A prefix that can added to beginning of all requests.
+#zuul.prefix=/api
+
+# Disable accessing services using service name (i.e. gallery-service).
+# They should be only accessed through the path defined below.
+
+zuul:
+  ignoredServices: "*"
+  routes:
+    gallery-service:
+      path: /gallery/**
+      id: gallery-service
+    auth-service:
+      path: /auth/**
+      id: auth-service
+      # By default, all requests to gallery service for example will start with: "/gallery/"
+      # What will be sent to the gallery service is what comes after the path defined,
+      # So, if request is "/gallery/view/1", gallery service will get "/view/1".
+      # In case of auth, we need to pass the "/auth/" in the path to auth service. So, set strip-prefix to false
+
+      strip-prefix: false
+      sensitive-headers:
+        - Cookie,Set-Cookie # Exclude authorization from sensitive headers
+
+---
+spring.profiles: docker
+
+app.eureka-server: eureka

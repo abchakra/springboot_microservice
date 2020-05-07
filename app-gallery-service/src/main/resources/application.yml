@@ -1,0 +1,27 @@
+server.port: 8100
+
+spring.application.name: gallery-service
+
+app.eureka-server: localhost
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${app.eureka-server}:8761/eureka/
+    initialInstanceInfoReplicationIntervalSeconds: 5
+    registryFetchIntervalSeconds: 5
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 5
+    
+    
+logging:
+  level:
+    root: INFO
+    com.example: DEBUG
+---
+spring.profiles: docker
+
+server.port: 8080
+
+app.eureka-server: eureka
