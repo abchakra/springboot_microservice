@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class GalleryRestTest {
+public class MockIntegrationTest {
 	@Autowired
 	private MockMvc mockMvc;
 

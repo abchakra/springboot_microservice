@@ -17,14 +17,13 @@ import com.example.gallery.entities.Gallery;
 @RequestMapping("/")
 public class HomeController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
-	
-	
+
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	@Autowired
 	private Environment env;
-	
+
 	@RequestMapping("/")
 	public String home() {
 		// This is useful for debugging
@@ -32,22 +31,26 @@ public class HomeController {
 		// We load balance among them, and display which instance received the request.
 		return "Hello from Gallery Service running at port: " + env.getProperty("local.server.port");
 	}
-  
+
 	@RequestMapping("/{id}")
 	public Gallery getGallery(@PathVariable final int id) {
 		// create gallery object
 		LOGGER.info("Creating gallery object ... ");
 		Gallery gallery = new Gallery();
 		gallery.setId(id);
-		
-		// get list of available images 
-		List<Object> images = restTemplate.getForObject("http://image-service/images/", List.class);
+
+		// get list of available images
+		List<Object> images = getImagesFor();
 		gallery.setImages(images);
-		
+
 		LOGGER.info("Returning images ... ");
 		return gallery;
 	}
-	
+
+	public List<Object> getImagesFor() {
+		return restTemplate.getForObject("http://image-service/images/", List.class);
+	}
+
 	// -------- Admin Area --------
 	// This method should only be accessed by users with role of 'admin'
 	// We'll add the logic of role based auth later
