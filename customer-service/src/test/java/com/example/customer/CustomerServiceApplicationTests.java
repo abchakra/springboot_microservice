@@ -1,13 +1,24 @@
 package com.example.customer;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.example.customer.controller.CustomerController;
+
+@RunWith(SpringRunner.class)
 @SpringBootTest
-class CustomerServiceApplicationTests {
+public class CustomerServiceApplicationTests {
+	@Autowired
+	private CustomerController controller;
 
 	@Test
-	void contextLoads() {
+	public void contextLoads() {
+		assertThat(controller).isNotNull();
 	}
 
 }
