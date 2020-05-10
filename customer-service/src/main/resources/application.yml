@@ -10,9 +10,9 @@ logging:
 app.eureka-server: localhost
 
 spring.datasource:
-  url: jdbc:mysql://localhost/customer-db
-  username: user
-  password: password
+  url: jdbc:mysql://localhost/customer_db
+  username: root
+  password: pwd
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
   
@@ -47,4 +47,4 @@ spring:
 spring.profiles: docker
 
 app.eureka-server: eureka
-spring.datasource.url: jdbc:mysql://mysql/customer-db
+spring.datasource.url: jdbc:mysql://mysql/customer_db

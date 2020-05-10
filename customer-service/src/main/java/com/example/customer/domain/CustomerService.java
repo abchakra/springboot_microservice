@@ -2,19 +2,9 @@ package com.example.customer.domain;
 
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
+public interface CustomerService {
 
-import lombok.RequiredArgsConstructor;
+	public Optional<CustomerEntity> findCustomerById(Long id);
 
-@Service
-@RequiredArgsConstructor
-
-public class CustomerService {
-
-	private final CustomerRepository customerRepository;
-
-	public Optional<CustomerEntity> findById(Long id) {
-
-		return customerRepository.findById(id);
-	}
+	public CustomerResponse saveCustomer(CustomerEntity customer);
 }
