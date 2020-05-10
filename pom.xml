@@ -29,6 +29,7 @@
 		<module>app-eureka-server</module>
 		<module>app-gallery-service</module>
 		<module>app-image-service</module>
+		<module>customer-service</module>
 	</modules>
 
 </project>

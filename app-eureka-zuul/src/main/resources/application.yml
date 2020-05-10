@@ -31,6 +31,9 @@ zuul:
     gallery-service:
       path: /gallery/**
       id: gallery-service
+    customer-service:
+      path: /customers/**
+      id: customer-service
     auth-service:
       path: /auth/**
       id: auth-service

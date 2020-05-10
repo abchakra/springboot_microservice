@@ -5,17 +5,15 @@ logging:
     root: INFO
     com.example: DEBUG
 
-
 app.eureka-server: localhost
 
 spring.datasource:
-  url: jdbc:mysql://localhost/user-db
+  url: jdbc:mysql://localhost/user_db
   username: user
   password: password
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-  
-      
+
 eureka:
   client:
     serviceUrl:
@@ -25,7 +23,6 @@ eureka:
   instance:
     leaseRenewalIntervalInSeconds: 5
     leaseExpirationDurationInSeconds: 5
-    
 
 ## Hibernate Properties
 # The SQL dialect makes Hibernate generate better SQL for the chosen database
@@ -38,10 +35,10 @@ spring:
     generate-ddl: true
     properties:
       hibernate:
-         dialect:   org.hibernate.dialect.MySQL5InnoDBDialect
-                
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
 ---
 spring.profiles: docker
 
 app.eureka-server: eureka
-spring.datasource.url: jdbc:mysql://mysql/user-db
+spring.datasource.url: jdbc:mysql://mysql-user/user_db

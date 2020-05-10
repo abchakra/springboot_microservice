@@ -25,7 +25,16 @@ services:
     build: app-eureka-auth
     mem_limit: 350m
     depends_on:
-      mysql:
+      mysql-user:
+        condition: service_healthy
+
+  customer-service:
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    build: customer-service
+    mem_limit: 350m
+    depends_on:
+      mysql-customer:
         condition: service_healthy
 
   gateway:
@@ -36,14 +45,30 @@ services:
     ports:
       - "8080:8080"
 
-  mysql:
+  mysql-user:
     image: mysql:5.7
     mem_limit: 350m
     ports:
       - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=rootpwd
-      - MYSQL_DATABASE=user-db
+      - MYSQL_DATABASE=user_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+    healthcheck:
+      test: '/usr/bin/mysql --user=user --password=password --execute "SHOW DATABASES;"'
+      interval: 20s
+      timeout: 5s
+      retries: 10
+
+  mysql-customer:
+    image: mysql:5.7
+    mem_limit: 350m
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpwd
+      - MYSQL_DATABASE=customer_db
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
     healthcheck:

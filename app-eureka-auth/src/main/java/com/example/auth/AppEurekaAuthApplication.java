@@ -1,5 +1,7 @@
 package com.example.auth;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,12 +28,15 @@ public class AppEurekaAuthApplication {
 	CommandLineRunner runner() {
 		return args -> {
 
-			// username: user password: user
-			urepository.save(
-					new UserEntity("user", "$2a$04$1.YhMIgNX/8TkCKGFUONWO1waedKhQ5KrnB30fl0Q01QKqmzLf.Zi", "USER"));
-			// username: admin password: admin
-			urepository.save(
-					new UserEntity("admin", "$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG", "ADMIN"));
+			List<UserEntity> users = urepository.findAll();
+			if (users.size() == 0) {
+				// username: user password: user
+				urepository.save(
+						new UserEntity("user", "$2a$04$1.YhMIgNX/8TkCKGFUONWO1waedKhQ5KrnB30fl0Q01QKqmzLf.Zi", "USER"));
+				// username: admin password: admin
+				urepository.save(new UserEntity("admin", "$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG",
+						"ADMIN"));
+			}
 		};
 	}
 
